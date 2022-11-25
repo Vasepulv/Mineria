@@ -1,0 +1,48 @@
+Introducción. 
+
+La muertes es uno de los procesos naturales de la vida, y la formas en que estos ocurren son determinadas por ciertos factores en la vida.
+Dado que la muerte es algo natural de la vida, es necesario estudiarlo. A los gobiernos les conviene saber cómo las muertes ocurren en ciertas zonas o sectores del país para poder invertir en políticas públicas destinadas a mejorar el servicio de salud u otros factores para reducir esta mortalidad. A los servicios de salud les conviene saber qué enfermedades están más propensa a tener la gente para poder brindarle un mejor servicio ayudando a tratar esas posibles enfermedades. Sirve para saber a qué edad está más propensa la gente a suicidarse. Dado todo lo anterior consideramos que es necesario estudiar este dataset de las muertes en Chile.
+
+Descripción de los datos y exploración inicial. 
+
+Se obtuvo este dataset del DEIS, el Departamente de Estadísticas e Información de Salud. Contiene todas las defunciones ocurridas en Chile el 2017, con su fecha de muerte, lugar de defunción, edad que tenía al morir y su causa. Esto corresponden a 106.309 filas.
+
+Aparte de los atributos ya mencionados, la tabla también contempla una segundo diagnóstico, que corresponde a la causa externa de la muerte. Tiene los datos del difunto, como su actividad laboral, su nivel de educación. También hay datos respecto de los padres de los difuntos, como su trabajo y nivel de educación, pero en muchos casos las datos eran faltantes.  En total el dataset tiene 50 atributos.
+
+Al analizar los datos con un primer gráfico, se puede apreciar algo muy evidente. La mayor parte de los datos son de la Región Metropolitana. 
+Los datos siguientes a este valor, son de la Región del BioBío y Valparaíso, que son la segunda y tercera más pobladas.  Por lo que se puede concluir que la cantidad de datos es proporcional a la cantidad de habitantes.
+
+Dado un segundo análisis a este gráfico, se contó la cantidad de defunciones agrupada por cierta cantidad de años.  Se puede notar que las defunciones siguen (algo parecido a) una distribución normal corrida hacia la derecha. La mayor parte de los datos corresponden a gente de entre los 40’s en adelante, con las años anteriores teniendo cantidades bastante menores. Su promedio son los 90’s años, que es el valor con mayor cantidad de defunciones.
+
+Se hizo unos gráficos comparando la cantidad de muertes respecto al diagnóstico 1, la causa principal. 
+
+
+
+
+La primero que se evidencia es que la primera muerte es por I219, que corresponde a un Infarto agudo del Miocardio.
+Las segundas y terceras causas de muerte corresponden a un tipo de Cáncer, con el segundo siendo C349 que corresponde a un cáncer de Pulmón, y el tercero C169 un cáncer de estómago.
+La cuarta causa de muerte es Hipertensión. La quinta es Neumonía.
+Se presencian enfermedades exclusivamente masculinas en este gráfico, con la sexta causa siendo un Cáncer de la Próstata.
+Las séptima y octava corresponden a muertes de accidentes vasculares.
+La novena corresponde a Alzheimer.
+La décima muerte corresponde a un cáncer de colón.
+
+La mayor cantidad de muertes corresponden a cáncer sobre otro diagnóstico, seguido de accidentes vasculares.
+Haciendo el mismo gráfico pero distinguiendo sexo, se obtuvo lo siguiente:
+  
+  Se repiten varias de las mismas enfermedades en los dos gráficos, con el gráfico anterior, principalmente el infarto agudo del miocardio, como principal causa de muerte en los dos. Como también el cáncer de pulmón, apareciendo ahora como cuarta causa de muerte en los dos gráficos. Y el cáncer de estómago, pero ocurriendo mucho más en hombres que en mujeres.
+También se aprecian diagnósticos que no aparecían antes en el top 10 de muertes. Como las asfixia (T71) en el caso de los hombres. Y cáncer a la vulva (C509)  y demencia (F30) en el caso de las mujeres. El cáncer a la próstata que era sexto en el gráfico de las muertes totales, aquí es la segundo causa de muerte en los hombres.
+Un último dato curioso de este gráfico es que en el gráfico aparece como décima causa de muerte en los hombres, R99, esto corresponde a muertes por causas desconocidas.
+
+Se hizo un nuevo gráfico comparando las causas de muerte entre zonas urbanas y rurales, del cual se podía apreciar como una causa de muerte en una zona podía llegar a tener una tasa con casi el doble de mortalidad comparada, como fue el caso del cáncer de pulmón. También vale la pena mencionar que en las zonas rurales las causas de muerte desconocidas ocupan el quinto lugar, mientras que en las zonas urbanas esta causa ni siquiera aparece en las mayores diez. 
+
+
+Se analizaron las 10 comunas con más defunciones dentro de la Región Metropolitana, siendo las primeras de forma lógica las con más habitantes, pero a pesar de esta información que podría parecer obvia, aún es posible sacarle provecho, ya que también se logra estudiar la proporción de muertes por cada mil habitantes. Por ejemplo, la comuna de Maipú posee alrededor de 500 mil habitantes para el censo 2.0 que se llevó a cabo el año 2017 y tuvo 2,5 mil defunciones el mismo año, por otro lado la comuna de la Florida la cual tiene aproximadamente 340 mil habitantes tuvo 2 mil defunciones. A simple vista se puede ver que la cantidad de habitantes no es el factor más relevante cuando de defunciones se está hablando. Una hipótesis puede ser que la comuna que tenga una población más vieja tendrá más cantidad de defunciones ese año.
+
+
+
+Temática o problemática central y describir cómo se abordará inicialmente.
+
+La temática de nuestro trabajo a realizar, será caracterizar las muertes de tal forma si es que se puede establecer una relación entre el tipo de muerte y caracteristicas del difunto, como la localidad o el nivel de educación.
+Nuestra forma de abordarlo será primeramente quitar los datos que no nos interesen o que sean ruido y luego buscar otras posibles correlaciones que no hayamos visto antes.
+Con esto seguiremos en hacer una red neuronal que nos permita predecir cuándo es más probable que una persona muera y por qué razones, en base a las correlaciones que puedan haber entre, por ejemplo, edades, causas de muerte, comuna, actividad laboral, nivel de educación, entre otros. 

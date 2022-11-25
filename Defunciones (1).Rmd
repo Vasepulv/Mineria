@@ -1,0 +1,149 @@
+---
+title: "Defunciones"
+author: "Grupo de defunciones"
+date: "23-08-2019"
+output: html_document
+---
+
+Motivación
+
+El dataset posee un potencial muy grande para poder predecir información preciada sobre las defunciones en Chile, para esto se debe entrenar un codigo para modelar a partir de muchos datos los atributos que se desen estimar. En el siguiente caso se podría estimar la esperanza de vida de los chilenos dependiendo de distintos factores. Por ejemplo comuna, ocupación, fecha de nacimiento, estudios, región, etc. También es interesante estudiar las distintas causas de las defunciones. Con esto en mente si las hipotesis del proyecto logran ser ciertas, entonces la idea podría ser ofrecida a empresas que se dedican a seguros de vida o rentas vitalicias, a los distintos ministerios del gobierno para poder respaldar las distintas leyes que sean lo mejor para los chilenos.
+
+Hipotesis
+
+Las distintas hipotesis para el dataset de las defunciones en Chile son:
+
+1) Lograr estimar la esperanza de vida de los chilenos según comuna, niveles de estudio y ocupación
+
+2) Estudiar distintas causas que podrían influir en muertes por suicidios
+
+3) Analizar los diagnosticos más relevantes por distintos rangos de edades 
+
+```{r, message = F, warning=F}
+Defunciones <- read.csv("~/Dataming/DEF_2017.csv", sep=";")
+library(dplyr)
+library(ggplot2)
+dim(Defunciones)
+
+def<- with(Defunciones,Defunciones[EDAD_TIPO==1,])
+hist(def$EDAD_CANT, xlim=c(0,120), breaks =150,xlab = "Edad de Defunción", ylab = "Cantidad de Defunciones", main="Cantidad de Defunciones por Edad Año 2017")
+
+
+Cantidad_DIAG1 <- count(Defunciones,vars = DIAG1)
+
+DIA1_ordenado <- Cantidad_DIAG1[order(-Cantidad_DIAG1$n),]
+
+TOP10_DIAG1 <- DIA1_ordenado[1:10,]
+
+
+
+ggplot(TOP10_DIAG1) +
+  geom_bar(aes(x = reorder(vars,n), y = n), stat="identity") +
+  ggtitle("Top 10 Causas de Muerte en Chile en 2017") +
+  xlab("Diagnostico de la Defunción") + ylab("Cantidad")
+
+
+
+mujeres <- Defunciones[Defunciones$SEXO==2,]
+
+Cantidad_DIAG1_mujeres <- count(mujeres,vars = DIAG1)
+
+DIA1_ordenado_mujeres <- Cantidad_DIAG1_mujeres[order(-Cantidad_DIAG1_mujeres$n),]
+
+TOP10_DIAG1_mujeres <- DIA1_ordenado_mujeres[1:10,]
+
+
+
+ggplot(TOP10_DIAG1_mujeres) +
+  geom_bar(aes(x = reorder(vars,n), y = n), stat="identity") +
+  ggtitle("Top 10 Causas de Muerte en Chile en 2017 Mujeres") +
+  xlab("Diagnostico de la Defunción") + ylab("Cantidad")
+
+
+
+
+
+Hombres <- Defunciones[Defunciones$SEXO==1,]
+
+Cantidad_DIAG1_h <- count(Hombres,vars = DIAG1)
+
+DIA1_ordenado_h <- Cantidad_DIAG1_h[order(-Cantidad_DIAG1_h$n),]
+
+TOP10_DIAG1_h <- DIA1_ordenado_h[1:10,]
+
+
+
+ggplot(TOP10_DIAG1_h) +
+  geom_bar(aes(x = reorder(vars,n), y = n), stat="identity") +
+  ggtitle("Top 10 Causas de Muerte en Chile en 2017 Hombres") +
+  xlab("Diagnostico de la Defunción") + ylab("Cantidad")
+
+
+
+urba <- Defunciones[Defunciones$URBA_RURAL==1,]
+
+Cantidad_DIAG1_u <- count(urba,vars = DIAG1)
+
+DIA1_ordenado_u <- Cantidad_DIAG1_u[order(-Cantidad_DIAG1_u$n),]
+
+TOP10_DIAG1_u <- DIA1_ordenado_u[1:10,]
+
+
+
+ggplot(TOP10_DIAG1_u) +
+  geom_bar(aes(x = reorder(vars,n), y = n), stat="identity") +
+  ggtitle("Top 10 Causas de Muerte en Chile en 2017 Urbano") +
+  xlab("Diagnostico de la Defunción") + ylab("Cantidad")
+
+
+
+rural <- Defunciones[Defunciones$URBA_RURAL==2,]
+
+Cantidad_DIAG1_r <- count(rural,vars = DIAG1)
+
+DIA1_ordenado_r <- Cantidad_DIAG1_r[order(-Cantidad_DIAG1_r$n),]
+
+TOP10_DIAG1_r <- DIA1_ordenado_r[1:10,]
+
+TOP10_DIAG1_r
+
+ggplot(TOP10_DIAG1_r) +
+  geom_bar(aes(x = reorder(vars,n), y = n), stat="identity") +
+  ggtitle("Top 10 Causas de Muerte en Chile en 2017 Rural") +
+  xlab("Diagnostico de la Defunción") + ylab("Cantidad")
+
+
+
+
+
+
+Difuntos_RegMetropolitana <-Defunciones[Defunciones$REG_RES==13,]
+
+Cantidad_Comuna <- count(Difuntos_RegMetropolitana,vars = COMUNA)
+
+comuna_ordenado <- Cantidad_Comuna[order(-Cantidad_Comuna$n),]
+
+TOp10_DIAG_comuna <- comuna_ordenado[1:10,]
+
+
+TOp10_DIAG_comuna
+
+comunas<-c("Puente Alto","Maipú", "La Florida" ,"Las Condes", "San Bernardo", "Santiago", "Ñuñoa","Peñalolen", "Providencia", "Recoleta")
+n_comunas <- TOp10_DIAG_comuna$n
+
+Top10_comunas_cod <- data.frame(comunas,n_comunas)
+Top10_comunas_cod
+
+ggplot(Top10_comunas_cod) +
+  geom_bar(aes(x = reorder(comunas,n_comunas), y = n_comunas), stat="identity") +
+  coord_flip()+
+  ggtitle("Top 10 Comunas de la Región Metropolitana con más Defunciones") +
+  xlab("Comunas") + ylab("Cantidad")
+
+
+sum(Cantidad_Comuna$n)
+
+
+
+```
+
